@@ -1,141 +1,145 @@
-﻿// https://adventofcode.com/2022/day/2
+﻿//// https://adventofcode.com/2022/day/2
 
-string input = File.ReadAllText("input.txt");
+//using System.Data;
 
-if (string.IsNullOrWhiteSpace(input))
-    Console.WriteLine("No input given");
+//string input = File.ReadAllText("input.txt");
 
-var rounds = input.Split("\r\n");
-var roundsSummary = new List<Round>();
+//if (string.IsNullOrWhiteSpace(input))
+//    Console.WriteLine("No input given");
 
-for (int roundIndex = 0; roundIndex < rounds.Length; roundIndex++)
-{
-    var move = rounds[roundIndex].Split(' ');
-    Round round = new()
-    {
-        OpponentShape = (OpponentShape)char.Parse(move[0]),
-        MyShape = (MyShape)char.Parse(move[1]),
-        MustResult = (ResultWithPoints)char.Parse(move[1]),
-    };
+//Hash
 
-    CalculatePoints(round); // Part 1
-    round.MustResult = GetPart2Points(round.MyShape); // Part 2
+////var rounds = input.Split("\r\n");
+////var roundsSummary = new List<Round>();
 
-    roundsSummary.Add(round);
-}
+////for (int roundIndex = 0; roundIndex < rounds.Length; roundIndex++)
+////{
+////    var move = rounds[roundIndex].Split(' ');
+////    Round round = new()
+////    {
+////        OpponentShape = (OpponentShape)char.Parse(move[0]),
+////        MyShape = (MyShape)char.Parse(move[1]),
+////        MustResult = (ResultWithPoints)char.Parse(move[1]),
+////    };
 
-Console.WriteLine($"Summary:");
-Console.WriteLine($"Wins: {roundsSummary.Where(x => x.Result == ResultWithPoints.Win).Count()}");
-Console.WriteLine($"Draws: {roundsSummary.Where(x => x.Result == ResultWithPoints.Draw).Count()}");
-Console.WriteLine($"Losses: {roundsSummary.Where(x => x.Result == ResultWithPoints.Loss).Count()}");
-Console.WriteLine($"Part 1:");
-Console.WriteLine($"Total points: {roundsSummary.Select(x => x.Part1TotalPoints).Sum()}");
-Console.WriteLine($"Part 2:");
-Console.WriteLine($"Total points: {roundsSummary.Select(x => x.Part2TotalPoints).Sum()}");
-Console.WriteLine($"END");
+////    CalculatePoints(round); // Part 1
+////    round.MustResult = GetPart2Points(round.MyShape); // Part 2
 
-static Round CalculatePoints(Round round)
-{
-    round.ShapePoints = GetShapePoints(round.MyShape);
+////    roundsSummary.Add(round);
+////}
 
-    switch (round.OpponentShape)
-    {
-        case OpponentShape.Rock:
-            switch (round.MyShape)
-            {
-                case MyShape.Rock:
-                    round.Result = ResultWithPoints.Draw;
-                    break;
-                case MyShape.Paper:
-                    round.Result = ResultWithPoints.Win;
-                    break;
-                case MyShape.Scissors:
-                    round.Result = ResultWithPoints.Loss;
-                    break;
-            }
-            break;
-        case OpponentShape.Paper:
-            switch (round.MyShape)
-            {
-                case MyShape.Rock:
-                    round.Result = ResultWithPoints.Loss;
-                    break;
-                case MyShape.Paper:
-                    round.Result = ResultWithPoints.Draw;
-                    break;
-                case MyShape.Scissors:
-                    round.Result = ResultWithPoints.Win;
-                    break;
-            }
-            break;
-        case OpponentShape.Scissors:
-            switch (round.MyShape)
-            {
-                case MyShape.Rock:
-                    round.Result = ResultWithPoints.Win;
-                    break;
-                case MyShape.Paper:
-                    round.Result = ResultWithPoints.Loss;
-                    break;
-                case MyShape.Scissors:
-                    round.Result = ResultWithPoints.Draw;
-                    break;
-            }
-            break;
-    }
-    return round;
-}
+////Console.WriteLine($"Summary:");
+////Console.WriteLine($"Wins: {roundsSummary.Where(x => x.Result == ResultWithPoints.Win).Count()}");
+////Console.WriteLine($"Draws: {roundsSummary.Where(x => x.Result == ResultWithPoints.Draw).Count()}");
+////Console.WriteLine($"Losses: {roundsSummary.Where(x => x.Result == ResultWithPoints.Loss).Count()}");
+////Console.WriteLine($"Part 1:");
+////Console.WriteLine($"Total points: {roundsSummary.Select(x => x.Part1TotalPoints).Sum()}");
+////Console.WriteLine($"Part 2:");
+////Console.WriteLine($"Total points: {roundsSummary.Select(x => x.Part2TotalPoints).Sum()}");
+////Console.WriteLine($"END");
 
-static int GetShapePoints(MyShape shape)
-{
-    return shape switch
-    {
-        MyShape.Rock => 1,
-        MyShape.Paper => 2,
-        MyShape.Scissors => 3,
-        _ => 0,
-    };
-}
+////static Round CalculatePoints(Round round)
+////{
+////    round.ShapePoints = GetShapePoints(round.MyShape);
 
-static ResultWithPoints GetPart2Points(MyShape shape)
-{
-    return shape switch
-    {
-        MyShape.Rock => ResultWithPoints.Loss,
-        MyShape.Paper => ResultWithPoints.Draw,
-        MyShape.Scissors => ResultWithPoints.Win,
-        _ => 0,
-    };
-}
+////    switch (round.OpponentShape)
+////    {
+////        case OpponentShape.Rock:
+////            switch (round.MyShape)
+////            {
+////                case MyShape.Rock:
+////                    round.Result = ResultWithPoints.Draw;
+////                    break;
+////                case MyShape.Paper:
+////                    round.Result = ResultWithPoints.Win;
+////                    break;
+////                case MyShape.Scissors:
+////                    round.Result = ResultWithPoints.Loss;
+////                    break;
+////            }
+////            break;
+////        case OpponentShape.Paper:
+////            switch (round.MyShape)
+////            {
+////                case MyShape.Rock:
+////                    round.Result = ResultWithPoints.Loss;
+////                    break;
+////                case MyShape.Paper:
+////                    round.Result = ResultWithPoints.Draw;
+////                    break;
+////                case MyShape.Scissors:
+////                    round.Result = ResultWithPoints.Win;
+////                    break;
+////            }
+////            break;
+////        case OpponentShape.Scissors:
+////            switch (round.MyShape)
+////            {
+////                case MyShape.Rock:
+////                    round.Result = ResultWithPoints.Win;
+////                    break;
+////                case MyShape.Paper:
+////                    round.Result = ResultWithPoints.Loss;
+////                    break;
+////                case MyShape.Scissors:
+////                    round.Result = ResultWithPoints.Draw;
+////                    break;
+////            }
+////            break;
+////    }
+////    return round;
+////}
 
-class Round
-{
-    public OpponentShape OpponentShape { get; init; }
-    public MyShape MyShape { get; init; }
-    public ResultWithPoints Result { get; set; }
-    public ResultWithPoints MustResult { get; set; }
-    public int ShapePoints { get; set; }
-    public int Part1TotalPoints => ShapePoints + (int)Result;
-    public int Part2TotalPoints => ShapePoints + (int)MustResult;
-};
+////static int GetShapePoints(MyShape shape)
+////{
+////    return shape switch
+////    {
+////        MyShape.Rock => 1,
+////        MyShape.Paper => 2,
+////        MyShape.Scissors => 3,
+////        _ => 0,
+////    };
+////}
 
-enum MyShape
-{
-    Rock = 'X',
-    Paper = 'Y',
-    Scissors = 'Z',
-}
+////static ResultWithPoints GetPart2Points(MyShape shape)
+////{
+////    return shape switch
+////    {
+////        MyShape.Rock => ResultWithPoints.Loss,
+////        MyShape.Paper => ResultWithPoints.Draw,
+////        MyShape.Scissors => ResultWithPoints.Win,
+////        _ => 0,
+////    };
+////}
 
-enum OpponentShape
-{
-    Rock = 'A',
-    Paper = 'B',
-    Scissors = 'C',
-}
+////class Round
+////{
+////    public OpponentShape OpponentShape { get; init; }
+////    public MyShape MyShape { get; init; }
+////    public ResultWithPoints Result { get; set; }
+////    public ResultWithPoints MustResult { get; set; }
+////    public int ShapePoints { get; set; }
+////    public int Part1TotalPoints => ShapePoints + (int)Result;
+////    public int Part2TotalPoints => ShapePoints + (int)MustResult;
+////};
 
-enum ResultWithPoints
-{
-    Loss = 0,
-    Draw = 3,
-    Win = 6,
-}
+////enum MyShape
+////{
+////    Rock = 'X',
+////    Paper = 'Y',
+////    Scissors = 'Z',
+////}
+
+////enum OpponentShape
+////{
+////    Rock = 'A',
+////    Paper = 'B',
+////    Scissors = 'C',
+////}
+
+////enum ResultWithPoints
+////{
+////    Loss = 0,
+////    Draw = 3,
+////    Win = 6,
+////}
